@@ -44,6 +44,7 @@ class ProductProvider extends Component {
     addToCart = (id) =>{
         let tempProducts = [...this.state.products];
         const index = tempProducts.indexOf(this.getItem(id));
+
         const product = tempProducts[index];
         product.inCart = true;
         product.count = 1;
@@ -71,9 +72,11 @@ class ProductProvider extends Component {
     
     increment = (id) => {
         let tempCart = [...this.state.cart];
-        const selectedProduct = tempCart.find(item => (item.id == id));
+        const selectedProduct = tempCart.find(item => (item.id === id));
+
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
+
         product.count = product.count + 1;
         product.total = product.count * product.price;
 
@@ -83,13 +86,28 @@ class ProductProvider extends Component {
     }
 
     decrement = (id) => {
-        console.log('this the decrement method');
+        let tempCart = [...this.state.cart];
+        const selectedProduct = tempCart.find(item => (item.id === id));
+
+        const index = tempCart.indexOf(selectedProduct);
+        const product = tempCart[index];
+
+        product.count = product.count - 1;
+        console.log(id+ ' decrement ID')
+        if (product.count === 0) {
+            this.removeItem(id)
+        } else {
+            product.total = product.count * product.price;
+            this.setState(() => {
+                return {cart:[...tempCart]}
+            }, () => {this.addTotals()})
+        }
     }
 
     removeItem = (id) => {
         let tempProducts = [...this.state.products];
         let tempCart = [...this.state.cart];
-
+        console.log(id + ' removeItem ID' )
         tempCart = tempCart.filter(item => item.id !== id);
 
         const index = tempProducts.indexOf(this.getItem(id));
@@ -97,7 +115,7 @@ class ProductProvider extends Component {
         removedProduct.inCart = false;
         removedProduct.count = 0;
         removedProduct.total = 0;
-
+        
         this.setState (() => {
             return {
                 cart:[...tempCart],
