@@ -5,6 +5,7 @@ import EmptyCart from "./EmptyCart";
 import { ProductConsumer } from '../../context';
 import CartList from "./CartList";
 import CartTotals from './CartTotals.js';
+import { ChildLink } from "../Functional Components/ChildLocationHistory";
 
 export default class Cart extends Component {
     
@@ -20,7 +21,7 @@ export default class Cart extends Component {
                                 <Title name='your' title='cart' />
                                 <CartColumns />
                                 <CartList value = {value}></CartList>
-                                <CartTotals value={value} />
+                                <CartTotals value={value} navigate={<ChildLink navigate />} />
                             </React.Fragment>
                             )
                         } else { 

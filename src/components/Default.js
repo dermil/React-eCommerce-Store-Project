@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
-
-const ChildLink = () => {
-    const location = useLocation();
-
-    return (
-        location.pathname
-    )
-}
+import { ChildLink } from "./Functional Components/ChildLocationHistory";
 
 export default class Default extends Component {
     render(){
@@ -20,7 +12,7 @@ export default class Default extends Component {
                         <h1 className="display-3">404</h1>
                         <h1>error</h1>
                         <h2>Page not found</h2>
-                        <h3>the requested URL<span className="text-danger"> <ChildLink /></span> was not found</h3>
+                        <h3>the requested URL<span className="text-danger"> <ChildLink location /></span> was not found</h3>
                     </div>
                 </div>
             </div>
