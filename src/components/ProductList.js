@@ -1,10 +1,14 @@
 import React, {Component} from "react";
+import SearchBar from "./Functional Components/SearchBar";
 import Product from './Product';
 import Title from "./Functional Components/Title";
 import { ProductConsumer } from "../context";
 
 
+
 export default class ProductList extends Component {
+
+
     render(){
         
         return (
@@ -15,7 +19,15 @@ export default class ProductList extends Component {
                         
                         <div className="row">
                             <ProductConsumer>
+                                {(value) => {
+                                   return <SearchBar value={value} />
+                                }}
+                            </ProductConsumer>
+                                
+                        
+                            <ProductConsumer>
                                 {(productInfo)=>{
+                                
                                     return productInfo.products.map(product =>{
                                         return <Product key={product.id} product={product} /> 
                                     })

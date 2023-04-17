@@ -29,7 +29,17 @@ class ProductProvider extends Component {
             return { products: tempProducts }
         })
     }
-
+    findItems = (query) => {
+        this.setProducts();
+        const filterProducts = this.state.products.filter(product => product.title.includes(query));
+        
+        if (!query) {
+            this.setProducts();
+        }
+        this.setState(()=>{
+            return { products: filterProducts }
+        })
+    }
     getItem = (id) => {
         const product = this.state.products.find(item => item.id === id);
         return product;
@@ -167,7 +177,8 @@ class ProductProvider extends Component {
                 increment: this.increment,
                 decrement: this.decrement,
                 removeItem: this.removeItem,
-                clearCart: this.clearCart
+                clearCart: this.clearCart,
+                findItems: this.findItems
                 }}>
                 {this.props.children}
             </ProductContext.Provider>
