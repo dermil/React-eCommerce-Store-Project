@@ -8,6 +8,7 @@ const ProductContext = React.createContext();
 class ProductProvider extends Component {
     state={
         products: [],
+        displayProducts: [],
         productDetails: detailProduct,
         cart: [],
         modalOpen: false,
@@ -26,18 +27,22 @@ class ProductProvider extends Component {
             tempProducts = [...tempProducts,singleItem];
         });
         this.setState(()=>{
-            return { products: tempProducts }
+            return { products: tempProducts, displayProducts: tempProducts  }
         })
     }
     findItems = (query) => {
         this.setProducts();
-        const filterProducts = this.state.products.filter(product => product.title.includes(query));
+        const filterProducts = this.state.products.filter(product => {
+            const wordsToSearch = query.toLowerCase().split(' ');
+            const titleWords = product.title.toLowerCase().split(' ');
+            return wordsToSearch.every(word => titleWords.some(titleWord => titleWord.startsWith(word)));
+            });
         
         if (!query) {
             this.setProducts();
         }
         this.setState(()=>{
-            return { products: filterProducts }
+            return { displayProducts: filterProducts}
         })
     }
     getItem = (id) => {
@@ -61,7 +66,7 @@ class ProductProvider extends Component {
         const price = product.price;
         product.total = price;
         this.setState(() => {
-            return {products: tempProducts, cart:[...this.state.cart, product]}
+            return {products: tempProducts, displayProducts:tempProducts, cart:[...this.state.cart, product]}
         }, () => {
             this.addTotals();
             }

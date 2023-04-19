@@ -8,9 +8,16 @@ export default function SearchBar({value}) {
     }
 
     const handleSearch = (event) => {
+        
         setSearchTerm(event.target.value);
         
     };
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          handleClick();
+        }
+      };
 
     return (
         <div className="input-group mb-3">
@@ -18,7 +25,7 @@ export default function SearchBar({value}) {
                 <span class="input-group-text" id="basic-addon1">Search</span>
             </div>
             <input type="text" class="form-control" placeholder="Search Products" aria-label="Search Products" aria-describedby="basic-addon1" 
-            value={searchTerm} onChange={handleSearch}/>
+            value={searchTerm} onChange={handleSearch} onKeyDown={handleKeyDown}/>
             <button class="input-group-text" onClick={handleClick}><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         )
